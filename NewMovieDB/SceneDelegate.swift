@@ -11,12 +11,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+    func scene(_ scene: UIScene,
+               willConnectTo session: UISceneSession,
+               options connectionOptions: UIScene.ConnectionOptions) {
+        setupFirstScreen(scene)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -47,6 +45,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 
+    func setupFirstScreen(_ scene: UIScene) {
+        guard let windowScene = (scene as? UIWindowScene) else { return }
 
+        // Create UIWindow and set root view controller
+        let window = UIWindow(windowScene: windowScene)
+
+        // Dependency injection: pass the real service to view model
+        let movieService = MovieService()
+        let movieListViewModel = MovieListViewModel(service: movieService)
+        let rootVC = MovieListViewController(viewModel: movieListViewModel)
+        let navigationController = UINavigationController(rootViewController: rootVC)
+
+        window.rootViewController = navigationController
+        self.window = window
+        window.makeKeyAndVisible()
+    }
 }
-
