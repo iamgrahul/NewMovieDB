@@ -10,6 +10,7 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    var coordinator: MovieCoordinator?
 
     func scene(_ scene: UIScene,
                willConnectTo session: UISceneSession,
@@ -48,16 +49,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func setupFirstScreen(_ scene: UIScene) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
-        // Create UIWindow and set root view controller
+        let navController = UINavigationController()
+        coordinator = MovieCoordinator(navigationController: navController)
+        coordinator?.start()
+
         let window = UIWindow(windowScene: windowScene)
-
-        // Dependency injection: pass the real service to view model
-        let movieService = MovieService()
-        let movieListViewModel = MovieListViewModel(service: movieService)
-        let rootVC = MovieListViewController(viewModel: movieListViewModel)
-        let navigationController = UINavigationController(rootViewController: rootVC)
-
-        window.rootViewController = navigationController
+        window.rootViewController = navController
         self.window = window
         window.makeKeyAndVisible()
     }
