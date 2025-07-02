@@ -1,4 +1,5 @@
 class MovieListViewModel {
+    weak var coordinator: MovieCoordinator?
     private let service: MovieServiceProtocol
     private(set) var movies: [Movie] = []
 
@@ -12,5 +13,9 @@ class MovieListViewModel {
 
     func movie(at index: Int) -> Movie {
         return movies[index]
+    }
+
+    func didSelect(movie: Movie) {
+        coordinator?.showMovieDetail(movie: movie)
     }
 }
