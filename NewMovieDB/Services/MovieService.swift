@@ -2,7 +2,7 @@ import Foundation
 
 class MovieService: MovieServiceProtocol {
     func fetchMovies() async throws -> [Movie] {
-        guard let url = URL(string: "https://amairasolutions.com/test.json") else {
+        guard let url = URL(string: AppConstants.API.moviesEndpoint) else {
             throw URLError(.badURL)
         }
         let (data, _) = try await URLSession.shared.data(from: url)

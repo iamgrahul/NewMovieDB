@@ -27,7 +27,7 @@ class MovieListViewController: UIViewController {
 
 private extension MovieListViewController {
     func setupView() {
-        title = "Movies"
+        title = AppConstants.ViewControllerTitles.movieList
         view.addSubview(tableView)
         tableView.frame = view.bounds
         tableView.delegate = self
@@ -53,7 +53,7 @@ extension MovieListViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: AppConstants.CellIdentifiers.movieCell, for: indexPath)
         let movie = viewModel.movie(at: indexPath.row)
         cell.textLabel?.text = movie.title
         return cell

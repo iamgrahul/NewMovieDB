@@ -12,7 +12,7 @@ protocol Coordinator {
     func showMovieDetail(movie: Movie)
 }
 
-final class MovieCoordinator: Coordinator {
+class MovieCoordinator: Coordinator {
     var navigationController: UINavigationController
 
     init(navigationController: UINavigationController) {
