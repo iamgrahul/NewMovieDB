@@ -49,12 +49,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func setupFirstScreen(_ scene: UIScene) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
-        let navController = UINavigationController()
-        coordinator = MovieCoordinator(navigationController: navController)
-        coordinator?.start()
+        coordinator = MovieCoordinator()
+        let navigationController = coordinator?.start()
 
         let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = navController
+        window.rootViewController = navigationController
         self.window = window
         window.makeKeyAndVisible()
     }

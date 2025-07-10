@@ -1,45 +1,58 @@
-//
-//  MovieCoordinatorTests 2.swift
-//  NewMovieDB
-//
-//  Created by Apple on 02/07/25.
-//
-
 import XCTest
 @testable import NewMovieDB
 
-final class MovieCoordinatorTests: XCTestCase {
-
-    func testStart_PushesMovieListViewController() {
-        let nav = UINavigationController()
-        let coordinator = MovieCoordinator(navigationController: nav)
-
-        coordinator.start()
-
-        let rootVC = nav.viewControllers.first
-        XCTAssertTrue(rootVC is MovieListViewController, "Expected MovieListViewController to be root")
+class MovieCoordinatorTests: XCTestCase {
+    var coordinator: MovieCoordinator!
+    override func setUp() {
+        super.setUp()
+        coordinator = MovieCoordinator()
     }
 
-    func testShowMovieDetail_PushesMovieDetailViewController() {
-        let nav = UINavigationController()
-        let coordinator = MovieCoordinator(navigationController: nav)
-
-        let movie = Movie(id: 1, title: "Test", overview: "Overview", releaseDate: "2024", posterPath: "")
-        coordinator.showMovieDetail(movie: movie)
-
-        let pushedVC = nav.viewControllers.last
-        XCTAssertTrue(pushedVC is MovieDetailViewController, "Expected MovieDetailViewController to be pushed")
+    override func tearDown() {
+        coordinator = nil
+        super.tearDown()
     }
 
-    func testShowMovieDetail_PassesCorrectMovieToViewModel() {
-        let nav = UINavigationController()
-        let coordinator = MovieCoordinator(navigationController: nav)
+    /// test to check start method returns a object of UINavigationController
+    func testStartReturnsNavigationController() {
+        let navController = coordinator.start()
+        XCTAssertTrue(navController is UINavigationController)
+    }
 
-        let movie = Movie(id: 10, title: "Expected", overview: "Description", releaseDate: "2025", posterPath: "")
-        coordinator.showMovieDetail(movie: movie)
+    /// test to check that the rootviewcontroller is object of MovieListViewController
+    func testStartSetsMovieListVCAsRoot() {
+        let navController = coordinator.start()
+        let rootVC = navController.viewControllers.first
+        XCTAssertTrue(rootVC is MovieListViewController)
+    }
 
-        let detailVC = nav.viewControllers.last as? MovieDetailViewController
-        XCTAssertEqual(detailVC?.viewModel.movie.id, movie.id)
-        XCTAssertEqual(detailVC?.viewModel.movie.title, "Expected")
+    /// check viewmodel shouldnot be nil and viewmodel's coordinator should have the same coordinator.
+    func testStartSetsViewModelWithCoordinator() {
+        let navController = coordinator.start()
+        let rootVC = navController.viewControllers.first as? MovieListViewController
+        XCTAssertNotNil(rootVC?.viewModel)
+        XCTAssertTrue(rootVC?.viewModel.coordinator === coordinator)
+    }
+
+    /// should have MovieDetailViewController at the top navigation stack when pushed.
+    func testShowMovieDetailPushesDetailViewController() {
+        coordinator.navigationController = UINavigationController()
+
+        coordinator.showMovieDetail(movie: Movie.mock())
+
+        let pushedVC = coordinator.navigationController.topViewController
+        XCTAssertTrue(pushedVC is MovieDetailViewController)
+    }
+
+    /// should show correct correct movie on details screen.
+    func testShowMovieDetailPassesCorrectMovie() {
+        coordinator.navigationController = UINavigationController()
+
+        let mockMovie = Movie.mock()
+        coordinator.showMovieDetail(movie: mockMovie)
+
+        let detailVC = coordinator.navigationController.topViewController as? MovieDetailViewController
+        XCTAssertEqual(detailVC?.viewModel.movie.id, mockMovie.id)
+        XCTAssertEqual(detailVC?.viewModel.movie.title, mockMovie.title)
     }
 }

@@ -1,9 +1,4 @@
-//
-//  MovieDetailViewController.swift
-//  NewMovieDB
-//
-//  Created by Apple on 23/06/25.
-//
+
 
 import XCTest
 @testable import NewMovieDB
@@ -11,14 +6,9 @@ import XCTest
 final class MovieDetailViewControllerTests: XCTestCase {
     var sut: MovieDetailViewController!
     var viewModel: MovieDetailViewModel!
-    var mockMovie: Movie!
+    var mockMovie = Movie.mock()
 
     override func setUp() {
-        mockMovie = Movie(id: 1,
-                          title: "Movie Test",
-                          overview: "Overview",
-                          releaseDate: "2023",
-                          posterPath: "")
         viewModel = MovieDetailViewModel(movie: mockMovie)
         sut = MovieDetailViewController(viewModel: viewModel)
         sut.viewDidLoad()
