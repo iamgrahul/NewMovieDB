@@ -4,4 +4,5 @@
 enum AppErrors: Error {
     case invalidIndex
     case noInternet
+    case jailBreakDevice
 }

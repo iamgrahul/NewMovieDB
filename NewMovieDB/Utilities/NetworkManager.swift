@@ -14,8 +14,8 @@ class NetworkManager {
         }
     }
 
-    var isConnectedToInternet: Bool {
-        return reachability?.connection != .unavailable
+    var isConnectionUnavailable: Bool {
+        return reachability?.connection == .unavailable
     }
 
     func startMonitoring() {

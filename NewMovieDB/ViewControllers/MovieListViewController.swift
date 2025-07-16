@@ -8,7 +8,7 @@ class MovieListViewController: UIViewController {
     /// The view model that provides data and handles user interactions.
     private(set) var viewModel: MovieListViewModel
     private var activityIndicator = UIActivityIndicatorView(style: .large)
-    private var pullControl = UIRefreshControl()
+    private let pullControl = UIRefreshControl()
 
     /// The table view used to display the list of movies.
     let tableView = UITableView()
@@ -41,7 +41,12 @@ class MovieListViewController: UIViewController {
 
     /// Loads movie data from the view model asynchronously and reloads the table view.
     func loadMovies() {
-        if NetworkManager.shared.isConnectedToInternet {
+        if AppUtility.getJailbrokenStatus() {
+            showErrorAlert(error: AppErrors.jailBreakDevice,
+                           errorTitle: AppConstants.Messages.jailBreakDevice)
+        } else if NetworkManager.shared.isConnectionUnavailable {
+            showErrorAlert(error: AppErrors.noInternet, errorTitle: AppConstants.Messages.noInternetConnection)
+        } else {
             activityIndicator.startAnimating()
             Task {
                 do {
@@ -60,8 +65,6 @@ class MovieListViewController: UIViewController {
                     }
                 }
             }
-        } else {
-            showErrorAlert(error: AppErrors.noInternet, errorTitle: AppConstants.Messages.noInternetConnection)
         }
     }
 
@@ -116,7 +119,7 @@ private extension MovieListViewController {
 
     /// Actions for pull to refresh
     @objc private func refreshListData(_ sender: Any) {
-        self.pullControl.endRefreshing() // You can stop after API Call
+        pullControl.endRefreshing() // You can stop after API Call
         // Call API
         loadMovies()
     }

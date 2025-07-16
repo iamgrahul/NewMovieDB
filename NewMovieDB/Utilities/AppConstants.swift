@@ -30,6 +30,7 @@ struct AppConstants {
         static let invalidMovie = "Invalid movie"
         static let pullToRefresh = "Pull to refresh"
         static let noInternetConnection = "No Internet Connection"
+        static let jailBreakDevice = "Jail break device"
     }
 
     // MARK: - CellIdentifiers
