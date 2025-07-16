@@ -1,7 +1,7 @@
-
 import UIKit
 
-/// A protocol that defines the responsibilities of a coordinator, which manages navigation and flow between view controllers.
+/// A protocol that defines the responsibilities of a coordinator, which manages navigation
+/// and flow between view controllers.
 protocol Coordinator {
     /// The navigation controller used to manage the navigation stack.
     var navigationController: UINavigationController { get }
@@ -19,7 +19,7 @@ protocol Coordinator {
 
 /// A concrete implementation of the `Coordinator` protocol that manages navigation for the Movie module.
 class MovieCoordinator: Coordinator {
-    
+
     /// The navigation controller used for presenting and managing view controllers.
     var navigationController: UINavigationController
 
@@ -35,8 +35,8 @@ class MovieCoordinator: Coordinator {
         let service = MovieService()
         let viewModel = MovieListViewModel(service: service)
         viewModel.coordinator = self
-        let vc = MovieListViewController(viewModel: viewModel)
-        navigationController.pushViewController(vc, animated: false)
+        let movieVC = MovieListViewController(viewModel: viewModel)
+        navigationController.pushViewController(movieVC, animated: false)
         return navigationController
     }
 

@@ -1,4 +1,3 @@
-
 /// A protocol defining the interface for a service that fetches movie data.
 ///
 /// Conforming types are expected to implement asynchronous logic to retrieve a list of movies,

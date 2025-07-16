@@ -1,4 +1,3 @@
-
 /// A view model that provides data for the movie detail screen.
 class MovieDetailViewModel {
 

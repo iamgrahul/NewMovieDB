@@ -2,7 +2,7 @@ import UIKit
 
 /// A view controller that displays the details of a selected movie.
 class MovieDetailViewController: UIViewController {
-    
+
     // MARK: - Properties
 
     /// The view model containing the movie data to be displayed.

@@ -1,4 +1,3 @@
-
 import UIKit
 
 /// A view controller that displays a list of movies in a table view.
@@ -79,7 +78,7 @@ class MovieListViewController: UIViewController {
 // MARK: - Private Helpers
 
 private extension MovieListViewController {
-    
+
     /// Configures the view's appearance and sets up the table view.
     func setupView() {
         title = AppConstants.ViewControllerTitles.movieList
@@ -100,7 +99,7 @@ private extension MovieListViewController {
 // MARK: - UITableViewDataSource
 
 extension MovieListViewController: UITableViewDataSource {
-    
+
     /// Returns the number of rows in the given section.
     ///
     /// - Parameters:
@@ -134,7 +133,7 @@ extension MovieListViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 
 extension MovieListViewController: UITableViewDelegate {
-    
+
     /// Called when a movie row is selected. Passes the selected movie to the view model.
     ///
     /// - Parameters:

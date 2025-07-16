@@ -1,4 +1,3 @@
-
 /// A view model responsible for managing and providing movie data to the movie list screen.
 class MovieListViewModel {
 

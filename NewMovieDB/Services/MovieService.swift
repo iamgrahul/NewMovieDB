@@ -2,7 +2,7 @@ import Foundation
 
 /// A concrete implementation of `MovieServiceProtocol` responsible for fetching movie data from a remote API.
 class MovieService: MovieServiceProtocol {
-    
+
     /// Asynchronously fetches a list of movies from the configured API endpoint.
     ///
     /// This method performs a network call to the `moviesEndpoint` URL specified in `AppConstants.API`.

@@ -1,4 +1,3 @@
-
 /// A container for application-wide static constants used throughout the app.
 struct AppConstants {
 

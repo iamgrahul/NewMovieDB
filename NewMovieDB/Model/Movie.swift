@@ -1,8 +1,7 @@
-
 /// A model representing a single movie item, typically returned from a movie API.
 ///
-/// Conforms to `Decodable` to support JSON parsing and `Equatable` for comparisons.
-struct Movie: Decodable, Equatable {
+/// Conforms to `Codable` to support JSON parsing and `Equatable` for comparisons.
+struct Movie: Codable, Equatable {
 
     /// Unique identifier for the movie.
     let id: Int
