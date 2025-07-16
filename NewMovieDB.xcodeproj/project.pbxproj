@@ -6,8 +6,24 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		1820DC692E27A1AA0046A04D /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 1820DC682E27A1AA0046A04D /* Reachability */; };
+		1820DC872E27B7D10046A04D /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 1820DC862E27B7D10046A04D /* Reachability */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		1820DC722E27A41F0046A04D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 18126E4E2E043669003370CB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 18126E552E043669003370CB;
+			remoteInfo = NewMovieDB;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		18126E562E043669003370CB /* NewMovieDB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewMovieDB.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1820DC6E2E27A41F0046A04D /* NewMovieDBTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NewMovieDBTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -29,7 +45,7 @@
 			path = NewMovieDB;
 			sourceTree = "<group>";
 		};
-		186E4CB82E048038007339AD /* NewMovieDBTests */ = {
+		1820DC6F2E27A41F0046A04D /* NewMovieDBTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = NewMovieDBTests;
 			sourceTree = "<group>";
@@ -41,6 +57,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1820DC692E27A1AA0046A04D /* Reachability in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1820DC6B2E27A41F0046A04D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1820DC872E27B7D10046A04D /* Reachability in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,7 +76,8 @@
 			isa = PBXGroup;
 			children = (
 				18126E582E043669003370CB /* NewMovieDB */,
-				186E4CB82E048038007339AD /* NewMovieDBTests */,
+				1820DC6F2E27A41F0046A04D /* NewMovieDBTests */,
+				1820DC852E27B7D10046A04D /* Frameworks */,
 				18126E572E043669003370CB /* Products */,
 			);
 			sourceTree = "<group>";
@@ -60,8 +86,16 @@
 			isa = PBXGroup;
 			children = (
 				18126E562E043669003370CB /* NewMovieDB.app */,
+				1820DC6E2E27A41F0046A04D /* NewMovieDBTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		1820DC852E27B7D10046A04D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -85,10 +119,35 @@
 			);
 			name = NewMovieDB;
 			packageProductDependencies = (
+				1820DC682E27A1AA0046A04D /* Reachability */,
 			);
 			productName = NewMovieDB;
 			productReference = 18126E562E043669003370CB /* NewMovieDB.app */;
 			productType = "com.apple.product-type.application";
+		};
+		1820DC6D2E27A41F0046A04D /* NewMovieDBTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1820DC742E27A41F0046A04D /* Build configuration list for PBXNativeTarget "NewMovieDBTests" */;
+			buildPhases = (
+				1820DC6A2E27A41F0046A04D /* Sources */,
+				1820DC6B2E27A41F0046A04D /* Frameworks */,
+				1820DC6C2E27A41F0046A04D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1820DC732E27A41F0046A04D /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				1820DC6F2E27A41F0046A04D /* NewMovieDBTests */,
+			);
+			name = NewMovieDBTests;
+			packageProductDependencies = (
+				1820DC862E27B7D10046A04D /* Reachability */,
+			);
+			productName = NewMovieDBTests;
+			productReference = 1820DC6E2E27A41F0046A04D /* NewMovieDBTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -103,6 +162,10 @@
 					18126E552E043669003370CB = {
 						CreatedOnToolsVersion = 16.4;
 					};
+					1820DC6D2E27A41F0046A04D = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = 18126E552E043669003370CB;
+					};
 				};
 			};
 			buildConfigurationList = 18126E512E043669003370CB /* Build configuration list for PBXProject "NewMovieDB" */;
@@ -116,6 +179,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				1820DC5E2E2785720046A04D /* XCRemoteSwiftPackageReference "SwiftLint" */,
+				1820DC672E27A1AA0046A04D /* XCRemoteSwiftPackageReference "Reachability" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 18126E572E043669003370CB /* Products */;
@@ -123,12 +187,20 @@
 			projectRoot = "";
 			targets = (
 				18126E552E043669003370CB /* NewMovieDB */,
+				1820DC6D2E27A41F0046A04D /* NewMovieDBTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		18126E542E043669003370CB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1820DC6C2E27A41F0046A04D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -145,12 +217,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		1820DC6A2E27A41F0046A04D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
 		1820DC642E2785B90046A04D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			productRef = 1820DC632E2785B90046A04D /* SwiftLintBuildToolPlugin */;
+		};
+		1820DC732E27A41F0046A04D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 18126E552E043669003370CB /* NewMovieDB */;
+			targetProxy = 1820DC722E27A41F0046A04D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -334,6 +418,40 @@
 			};
 			name = Release;
 		};
+		1820DC752E27A41F0046A04D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.app.NewMovieDBTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NewMovieDB.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/NewMovieDB";
+			};
+			name = Debug;
+		};
+		1820DC762E27A41F0046A04D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.app.NewMovieDBTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NewMovieDB.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/NewMovieDB";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -355,6 +473,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		1820DC742E27A41F0046A04D /* Build configuration list for PBXNativeTarget "NewMovieDBTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1820DC752E27A41F0046A04D /* Debug */,
+				1820DC762E27A41F0046A04D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
@@ -366,6 +493,14 @@
 				minimumVersion = 0.59.1;
 			};
 		};
+		1820DC672E27A1AA0046A04D /* XCRemoteSwiftPackageReference "Reachability" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ashleymills/Reachability.swift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -373,6 +508,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1820DC5E2E2785720046A04D /* XCRemoteSwiftPackageReference "SwiftLint" */;
 			productName = "plugin:SwiftLintBuildToolPlugin";
+		};
+		1820DC682E27A1AA0046A04D /* Reachability */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1820DC672E27A1AA0046A04D /* XCRemoteSwiftPackageReference "Reachability" */;
+			productName = Reachability;
+		};
+		1820DC862E27B7D10046A04D /* Reachability */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1820DC672E27A1AA0046A04D /* XCRemoteSwiftPackageReference "Reachability" */;
+			productName = Reachability;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

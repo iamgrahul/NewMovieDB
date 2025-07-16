@@ -6,7 +6,7 @@ import XCTest
 final class MovieDetailViewControllerTests: XCTestCase {
     var sut: MovieDetailViewController!
     var viewModel: MovieDetailViewModel!
-    var mockMovie = Movie.mock()
+    let mockMovie = Movie(id: 1003, title: "title", overview: "Overview", releaseDate: "2023-01-01", posterPath: "/test.jpg")
 
     override func setUp() {
         viewModel = MovieDetailViewModel(movie: mockMovie)

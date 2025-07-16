@@ -8,6 +8,7 @@ class MovieListViewController: UIViewController {
     /// The view model that provides data and handles user interactions.
     private(set) var viewModel: MovieListViewModel
     private var activityIndicator = UIActivityIndicatorView(style: .large)
+    private var pullControl = UIRefreshControl()
 
     /// The table view used to display the list of movies.
     let tableView = UITableView()
@@ -40,30 +41,35 @@ class MovieListViewController: UIViewController {
 
     /// Loads movie data from the view model asynchronously and reloads the table view.
     func loadMovies() {
-        activityIndicator.startAnimating()
-        Task {
-            do {
-                // Background work
-                try await viewModel.loadMovies()
+        if NetworkManager.shared.isConnectedToInternet {
+            activityIndicator.startAnimating()
+            Task {
+                do {
+                    // Background work
+                    try await viewModel.loadMovies()
 
-                // UI updates on main thread
-                await MainActor.run {
-                    tableView.reloadData()
-                    activityIndicator.stopAnimating()
-                }
-            } catch {
-                await MainActor.run {
-                    activityIndicator.stopAnimating()
-                    showErrorAlert(error: error)
+                    // UI updates on main thread
+                    await MainActor.run {
+                        tableView.reloadData()
+                        activityIndicator.stopAnimating()
+                    }
+                } catch {
+                    await MainActor.run {
+                        activityIndicator.stopAnimating()
+                        showErrorAlert(error: error)
+                    }
                 }
             }
+        } else {
+            showErrorAlert(error: AppErrors.noInternet, errorTitle: AppConstants.Messages.noInternetConnection)
         }
     }
 
     /// Displays an alert with the error message and a Retry button.
-    func showErrorAlert(error: Error) {
+    func showErrorAlert(error: Error,
+                        errorTitle: String? = AppConstants.Messages.failedMessage) {
         let alert = UIAlertController(
-            title: AppConstants.Messages.failedMessage,
+            title: errorTitle,
             message: error.localizedDescription,
             preferredStyle: .alert
         )
@@ -71,7 +77,7 @@ class MovieListViewController: UIViewController {
             self?.loadMovies()
         }))
         alert.addAction(UIAlertAction(title: AppConstants.Messages.cancel, style: .cancel, handler: nil))
-        navigationController?.present(alert, animated: false)
+        present(alert, animated: false)
     }
 }
 
@@ -88,11 +94,29 @@ private extension MovieListViewController {
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: AppConstants.CellIdentifiers.movieCell)
         setupActivityIndicator()
+        setupPullToRefresh()
     }
 
     func setupActivityIndicator() {
         activityIndicator.center = view.center
         view.addSubview(activityIndicator)
+    }
+
+    func setupPullToRefresh() {
+        pullControl.attributedTitle = NSAttributedString(string: AppConstants.Messages.pullToRefresh)
+        pullControl.addTarget(self, action: #selector(refreshListData(_:)), for: .valueChanged)
+        if #available(iOS 10.0, *) {
+            tableView.refreshControl = pullControl
+        } else {
+            tableView.addSubview(pullControl)
+        }
+    }
+
+    // Actions
+    @objc private func refreshListData(_ sender: Any) {
+        self.pullControl.endRefreshing() // You can stop after API Call
+        // Call API
+        loadMovies()
     }
 }
 

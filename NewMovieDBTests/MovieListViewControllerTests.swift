@@ -13,6 +13,7 @@ final class MovieListViewControllerTests: XCTestCase {
     private var sut: MovieListViewController!
     private var mockViewModel: MockMovieListViewModel!
     private var mockService: MockMovieService!
+    let mockMovie = Movie(id: 1003, title: "title", overview: "Overview", releaseDate: "2023-01-01", posterPath: "/test.jpg")
 
     // MARK: - Setup & Teardown
 
@@ -49,9 +50,8 @@ final class MovieListViewControllerTests: XCTestCase {
     // MARK: - Successful Load
 
     func test_loadMovies_success_shouldReloadTableView() async {
-        mockViewModel.moviesToReturn = [Movie.mock(title: "Titanic")]
+        mockViewModel.moviesToReturn = [mockMovie]
         await sut.viewDidLoad()
-
         let expectation = XCTestExpectation(description: "Check row count on main thread")
 
         await MainActor.run {
@@ -66,18 +66,18 @@ final class MovieListViewControllerTests: XCTestCase {
     // MARK: - TableView DataSource
 
     func test_tableView_numberOfRows_matchesMovieCount() {
-        mockViewModel.moviesToReturn = [Movie.mock(), Movie.mock()]
+        mockViewModel.moviesToReturn = [mockMovie, mockMovie]
         sut.loadViewIfNeeded()
 
         XCTAssertEqual(sut.tableView(sut.tableView, numberOfRowsInSection: 0), 2)
     }
 
     func test_tableView_cellForRow_setsCorrectTitle() {
-        mockViewModel.moviesToReturn = [Movie.mock(title: "Interstellar")]
+        mockViewModel.moviesToReturn = [mockMovie]
         sut.loadViewIfNeeded()
 
         let cell = sut.tableView(sut.tableView, cellForRowAt: IndexPath(row: 0, section: 0))
-        XCTAssertEqual(cell.textLabel?.text, "Interstellar")
+        XCTAssertEqual(cell.textLabel?.text, "title")
     }
 
     func test_tableView_cellForRow_withInvalidIndex_shouldShowFallbackText() {
@@ -91,16 +91,15 @@ final class MovieListViewControllerTests: XCTestCase {
     // MARK: - Movie Access Tests
 
     func test_movieAt_validIndex_shouldReturnMovie() throws {
-        let movie = Movie.mock(title: "Gladiator")
-        mockViewModel.moviesToReturn = [movie]
+        mockViewModel.moviesToReturn = [mockMovie]
         sut.loadViewIfNeeded()
 
         let result = try mockViewModel.movie(at: 0)
-        XCTAssertEqual(result.title, "Gladiator")
+        XCTAssertEqual(result.title, "title")
     }
 
     func test_movieAt_negativeIndex_shouldThrow() {
-        mockViewModel.moviesToReturn = [Movie.mock()]
+        mockViewModel.moviesToReturn = [mockMovie]
         sut.loadViewIfNeeded()
 
         XCTAssertThrowsError(try mockViewModel.movie(at: -1)) { error in
@@ -109,7 +108,7 @@ final class MovieListViewControllerTests: XCTestCase {
     }
 
     func test_movieAt_outOfBoundsIndex_shouldThrow() {
-        mockViewModel.moviesToReturn = [Movie.mock()]
+        mockViewModel.moviesToReturn = [mockMovie]
         sut.loadViewIfNeeded()
 
         XCTAssertThrowsError(try mockViewModel.movie(at: 5)) { error in
@@ -120,13 +119,12 @@ final class MovieListViewControllerTests: XCTestCase {
     // MARK: - Selection
 
     func test_didSelectRow_shouldCallViewModelDidSelect() {
-        let movie = Movie.mock(title: "Inception")
-        mockViewModel.moviesToReturn = [movie]
+        mockViewModel.moviesToReturn = [mockMovie]
         sut.loadViewIfNeeded()
 
         sut.tableView(sut.tableView, didSelectRowAt: IndexPath(row: 0, section: 0))
 
-        XCTAssertEqual(mockViewModel.selectedMovie, movie)
+        XCTAssertEqual(mockViewModel.selectedMovie, mockMovie)
     }
 
     func test_didSelectRow_invalidIndex_shouldNotCrash() {
@@ -136,6 +134,36 @@ final class MovieListViewControllerTests: XCTestCase {
         sut.tableView(sut.tableView, didSelectRowAt: IndexPath(row: 5, section: 0))
 
         XCTAssertNil(mockViewModel.selectedMovie)
+    }
+
+    func test_showErrorAlert_presentsAlertControllerWithCorrectDetails() {
+        let window = UIWindow(frame: UIScreen.main.bounds)
+        window.makeKeyAndVisible()
+        window.rootViewController = sut
+        sut.viewDidLoad()
+        // Arrange
+        let dummyError = NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Test error message"])
+        // Act
+        sut.showErrorAlert(error: dummyError)
+
+        // Assert
+        guard let presented = sut.presentedViewController as? UIAlertController else {
+            XCTFail("Expected alert controller to be presented")
+            return
+        }
+
+        XCTAssertEqual(presented.title, AppConstants.Messages.failedMessage)
+        XCTAssertEqual(presented.message, "Test error message")
+        XCTAssertEqual(presented.actions.count, 2)
+
+        let retryAction = presented.actions.first { $0.title == AppConstants.Messages.retry }
+        let cancelAction = presented.actions.first { $0.title == AppConstants.Messages.cancel }
+
+        XCTAssertNotNil(retryAction)
+        XCTAssertEqual(retryAction?.style, .default)
+
+        XCTAssertNotNil(cancelAction)
+        XCTAssertEqual(cancelAction?.style, .cancel)
     }
 }
 
@@ -187,10 +215,4 @@ final class MockMovieListViewModel: MovieListViewModel {
 enum MockError: Error {
     case testError
     case invalidIndex
-}
-
-extension Movie {
-    static func mock(id: Int = 1, title: String = "Test Movie") -> Movie {
-        return Movie(id: id, title: title, overview: "Overview", releaseDate: "2023-01-01", posterPath: "/test.jpg")
-    }
 }

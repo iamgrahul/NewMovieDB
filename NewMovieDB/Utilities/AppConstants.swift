@@ -28,6 +28,8 @@ struct AppConstants {
         static let cancel = "Cancel"
         static let failedMessage = "Failed to Load Movies"
         static let invalidMovie = "Invalid movie"
+        static let pullToRefresh = "Pull to refresh"
+        static let noInternetConnection = "No Internet Connection"
     }
 
     // MARK: - CellIdentifiers

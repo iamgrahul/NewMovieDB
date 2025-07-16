@@ -3,4 +3,5 @@
 /// - invalidIndex: Indicates that an invalid index was accessed from a movie list.
 enum AppErrors: Error {
     case invalidIndex
+    case noInternet
 }

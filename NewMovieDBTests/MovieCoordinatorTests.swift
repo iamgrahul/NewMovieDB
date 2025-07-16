@@ -3,6 +3,8 @@ import XCTest
 
 class MovieCoordinatorTests: XCTestCase {
     var coordinator: MovieCoordinator!
+    let mockMovie = Movie(id: 1003, title: "title", overview: "Overview", releaseDate: "2023-01-01", posterPath: "/test.jpg")
+
     override func setUp() {
         super.setUp()
         coordinator = MovieCoordinator()
@@ -38,7 +40,7 @@ class MovieCoordinatorTests: XCTestCase {
     func testShowMovieDetailPushesDetailViewController() {
         coordinator.navigationController = UINavigationController()
 
-        coordinator.showMovieDetail(movie: Movie.mock())
+        coordinator.showMovieDetail(movie: mockMovie)
 
         let pushedVC = coordinator.navigationController.topViewController
         XCTAssertTrue(pushedVC is MovieDetailViewController)
@@ -47,8 +49,6 @@ class MovieCoordinatorTests: XCTestCase {
     /// should show correct correct movie on details screen.
     func testShowMovieDetailPassesCorrectMovie() {
         coordinator.navigationController = UINavigationController()
-
-        let mockMovie = Movie.mock()
         coordinator.showMovieDetail(movie: mockMovie)
 
         let detailVC = coordinator.navigationController.topViewController as? MovieDetailViewController

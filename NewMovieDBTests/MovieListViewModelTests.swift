@@ -13,7 +13,7 @@ final class MovieListViewModelTests: XCTestCase {
     private var viewModel: MovieListViewModel!
     private var mockService: MockMovieService!
     private var mockCoordinator: MockCoordinator!
-
+    let mockMovie = Movie(id: 1003, title: "title", overview: "Overview", releaseDate: "2023-01-01", posterPath: "/test.jpg")
     // MARK: - Setup and Teardown
 
     override func setUp() {
@@ -33,7 +33,7 @@ final class MovieListViewModelTests: XCTestCase {
 
     // MARK: - Tests
     func testLoadMoviesSuccessfully() async throws {
-        let movie = Movie(id: 11, title: "title", overview: "Overview", releaseDate: "2023-01-01", posterPath: "/test.jpg")
+        let movie = Movie(id: 11, title: "Test Movie", overview: "Overview", releaseDate: "2023-01-01", posterPath: "/test.jpg")
         mockService.moviesToReturn = [movie]
         try await viewModel.loadMovies()
         XCTAssertEqual(viewModel.movies.count, 1)
@@ -51,16 +51,15 @@ final class MovieListViewModelTests: XCTestCase {
     }
 
     func testMovieAtIndexReturnsCorrectMovie() async throws {
-        mockService.moviesToReturn = [Movie.mock()]
+        mockService.moviesToReturn = [mockMovie]
         try await viewModel.loadMovies()
         let result = try viewModel.movie(at: 0)
-        XCTAssertEqual(result.id, 1)
+        XCTAssertEqual(result.id, 1003)
     }
 
     func test_didSelect_shouldCallCoordinator() {
-        let movie = Movie.mock(title: "The Matrix")
-        viewModel.didSelect(movie: movie)
-        XCTAssertEqual(mockCoordinator.receivedMovie, movie)
+        viewModel.didSelect(movie: mockMovie)
+        XCTAssertEqual(mockCoordinator.receivedMovie, mockMovie)
     }
 }
 
