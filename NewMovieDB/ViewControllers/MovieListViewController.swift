@@ -97,11 +97,13 @@ private extension MovieListViewController {
         setupPullToRefresh()
     }
 
+    /// setup for Activity Indicator
     func setupActivityIndicator() {
         activityIndicator.center = view.center
         view.addSubview(activityIndicator)
     }
 
+    /// setup for Pull To Refresh
     func setupPullToRefresh() {
         pullControl.attributedTitle = NSAttributedString(string: AppConstants.Messages.pullToRefresh)
         pullControl.addTarget(self, action: #selector(refreshListData(_:)), for: .valueChanged)
@@ -112,7 +114,7 @@ private extension MovieListViewController {
         }
     }
 
-    // Actions
+    /// Actions for pull to refresh
     @objc private func refreshListData(_ sender: Any) {
         self.pullControl.endRefreshing() // You can stop after API Call
         // Call API
