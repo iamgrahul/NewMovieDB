@@ -33,11 +33,10 @@ final class MovieListViewModelTests: XCTestCase {
 
     // MARK: - Tests
     func testLoadMoviesSuccessfully() async throws {
-        let movie = Movie(id: 11, title: "Test Movie", overview: "Overview", releaseDate: "2023-01-01", posterPath: "/test.jpg")
-        mockService.moviesToReturn = [movie]
+        mockService.moviesToReturn = [mockMovie]
         try await viewModel.loadMovies()
         XCTAssertEqual(viewModel.movies.count, 1)
-        XCTAssertEqual(viewModel.movies.first?.title, "Test Movie")
+        XCTAssertEqual(viewModel.movies.first?.title, "title")
     }
 
     func testLoadMoviesFailureThrows() async {
