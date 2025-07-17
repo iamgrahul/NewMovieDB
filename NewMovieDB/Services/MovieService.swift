@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 /// A concrete implementation of `MovieServiceProtocol` responsible for fetching movie data from a remote API.
 class MovieService: MovieServiceProtocol {

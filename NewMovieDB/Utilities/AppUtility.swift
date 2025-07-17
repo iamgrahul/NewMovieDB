@@ -43,3 +43,24 @@ struct Platform {
         #endif
     }
 }
+
+extension UIImageView {
+    /// Downloads an image asynchronously and sets it to the image view.
+    /// - Parameter urlString: The URL string of the image.
+    func setImage(from urlString: String) async {
+        guard let url = URL(string: urlString) else {
+            print("Invalid URL: \(urlString)")
+            return
+        }
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            if let image = UIImage(data: data) {
+                DispatchQueue.main.async {
+                    self.image = image
+                }
+            }
+        } catch {
+            print("Failed to load image: \(error)")
+        }
+    }
+}

@@ -10,6 +10,9 @@ struct AppConstants {
 
         /// The endpoint URL for fetching movies.
         static let moviesEndpoint = "\(baseURL)/test.json"
+
+        /// Image constant
+        static let imageURL = "https://image.tmdb.org/t/p/original/"
     }
 
     // MARK: - ViewControllerTitles
